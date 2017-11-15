@@ -55,6 +55,12 @@ class Transaction(object):
         yield self._connection.rollback()
         self._connection.close()
         self._connection = None
+        
+    @gen.coroutine
+    def close(self):
+        if self._connection:
+            self._connection.close()
+            self._connection = None
 
     def __del__(self):
         if self._connection:
